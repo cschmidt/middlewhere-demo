@@ -2,6 +2,10 @@ package middlewhere.model;
 
 import java.util.Collection;
 
+/**
+ * Basic model for an Order.
+ * @author cschmidt
+ */
 public interface Order {
 
     public abstract void addOrderItem(OrderItem item);
