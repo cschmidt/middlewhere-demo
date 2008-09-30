@@ -8,4 +8,4 @@
 # Ignore all the Maven target directories.
 target
 
-# Add a comment at the end, just to see how a pull works.
+# Add a comment at the end, just to see how a pull happens.
