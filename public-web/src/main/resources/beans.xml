@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:jee="http://www.springframework.org/schema/jee"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
+
+  <jee:jndi-lookup
+    id="inventory-command-queue"
+    jndi-name="queue/InventoryCommands"/>
+    
+  <jee:jndi-lookup
+    id="queue-connection-factory"
+    jndi-name="QueueConnectionFactory"/>
+  
+  <bean id="backgroundProcessor"
+     class="middlewhere.model.provider.BackgroundProcessorBean">
+     <property name="commandQueue">
+       <ref local="inventory-command-queue"/>
+     </property>
+     <property name="connectionFactory">
+       <ref local="queue-connection-factory"/>
+     </property>
+  </bean>
+</beans>

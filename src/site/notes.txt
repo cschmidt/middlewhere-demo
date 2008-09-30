@@ -1,0 +1,86 @@
+Test Console
+------------
+ - measure preconditions
+   - network characteristics
+   - disk io characteristics
+   - cpu profile (some sort of benchmark)
+    
+ - selectable task slots, # threads of each
+    - for example, want to run 20 DeadlockOnRead threads with 5 SimpleDeadlock threads
+ - measurements
+   - count # deadlocks in server logs
+      - remote log listener?
+   - cpu, network, disk utilization of system under test
+      - directly read /proc via ssh?  parse vmstat output?
+   - # of task executions and time taken
+ - automatic mode
+    - run a particular mix of tasks until a particular threshold is reached
+       - max CPU
+       - # deadlocks in the logs
+    - define a timeout (don't wait forever if the target condition is not reached)
+
+
+SimpleOptimizer
+ - sample some measurements, with defined thresholds at a particular frequency
+ - increase one variable until one or more of the thresholds are exceeded
+
+ 
+Test Definition
+-------------
+
+
+Groovy-based scripting?
+ - define JNDI names to expose to script
+ - how to get the client classes?
+ - web services?
+     
+Get a bean shell server going
+
+Keep calling until you get a deadlock, to a maximum of 'x' calls OR
+Call 'x' times and count the deadlocks
+
+
+Test cases
+ - reading with and without JBoss read-only true
+ - doing lots of work with lots of remote calls vs. batching up request objects
+     - simulate with different network speeds?
+ - basic deadlock
+ - find entity A, find entity B, etc
+ - CMR reads
+ - transaction timeouts
+ - various transaction attributes
+ - caching
+ - performance tests
+    - reads
+    - updates
+    - inserts
+
+
+
+http://localhost:8080/jmx-console/HtmlAdaptor?action=inspectMBean&name=jboss%3Aservice%3DHypersonic%2Cdatabase%3DlocalDB
+
+Installation and Setup
+ - enable the EntityLockMonitor in jboss-service.xml (maybe just deploy it on it's own?)
+
+
+Sample Test Plan 1
+---------------
+ - start jboss
+ - deploy middlewhere
+
+ - run simple deadlock test, count # deadlocks
+ - expect at least 1 deadlock
+
+
+
+ Requirements
+  - JBoss 4.2.2.GA
+  - Java 1.5+
+
+ Configuration
+  - JBOSS_HOME
+  - JAVA_HOME?
+
+
+Sample Test Plan 2
+---------------

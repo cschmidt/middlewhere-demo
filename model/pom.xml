@@ -1,0 +1,31 @@
+<?xml version="1.0"?><project>
+  <parent>
+    <artifactId>middlewhere-demo</artifactId>
+    <groupId>middlewhere</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>middlewhere-model</artifactId>
+  <name>MiddleWhere Business Model</name>
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>middlewhere-util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>middlewhere-async</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <!-- Normally the scope would be "test".  This is a workaround for
+           http://jira.codehaus.org/browse/MJAVADOC-106 -->
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+    </dependency>
+  </dependencies>
+</project>

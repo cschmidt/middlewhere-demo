@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:jee="http://www.springframework.org/schema/jee"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
+
+  <jee:remote-slsb 
+    id="inventory-ejb2" 
+    jndi-name="InventoryManager"
+    business-interface="middlewhere.ejb2server.InventoryManagerRemote"
+    cache-home="true" 
+    lookup-home-on-startup="true" 
+    resource-ref="false"
+    home-interface="middlewhere.ejb2server.InventoryManagerHome"
+    refresh-home-on-connect-failure="true" />
+
+  <jee:remote-slsb 
+    id="inventory-ejb2-deadlock-averse" 
+    jndi-name="DeadlockAverseInventoryManager"
+    business-interface="middlewhere.ejb2server.InventoryManagerRemote"
+    cache-home="true" 
+    lookup-home-on-startup="true" 
+    resource-ref="false"
+    home-interface="middlewhere.ejb2server.InventoryManagerHome"
+    refresh-home-on-connect-failure="true" />
+
+  <jee:jndi-lookup 
+    id="inventory-ejb3" 
+    jndi-name="middlewhere-ejb3-ear-1.0-SNAPSHOT/InventoryManager/remote"/>
+  
+  <jee:jndi-lookup
+    id="inventory-command-queue"
+    jndi-name="queue/InventoryCommands"/>
+    
+  <jee:jndi-lookup
+    id="queue-connection-factory"
+    jndi-name="QueueConnectionFactory"/>
+  
+  <bean id="backgroundProcessor"
+     class="middlewhere.async.jms.JMSAsynchronousExecutor"
+     destroy-method="stop">
+     <property name="commandQueue">
+       <ref local="inventory-command-queue"/>
+     </property>
+     <property name="connectionFactory">
+       <ref local="queue-connection-factory"/>
+     </property>
+  </bean>
+    
+  <bean id="itemNumberSupplier" 
+        class="middlewhere.client.provider.DefaultItemNumberSupplier"/>
+
+  <bean id="deadlockOnRead" class="middlewhere.client.DeadlockOnRead">
+    <property name="inventoryManager">
+      <ref local="inventory-ejb2"/>
+    </property>
+    <property name="itemNumberSupplier">
+      <ref local="itemNumberSupplier"/>
+    </property>
+  </bean>
+
+  <bean id="deadlockOnRead-deadlock-averse" 
+        class="middlewhere.client.DeadlockOnRead">
+    <property name="inventoryManager">
+      <ref local="inventory-ejb2-deadlock-averse"/>
+    </property>
+    <property name="itemNumberSupplier">
+      <ref local="itemNumberSupplier"/>
+    </property>
+  </bean>
+
+  <bean id="initialSetup" class="middlewhere.client.InitialSetup">
+    <property name="inventoryManager">
+      <ref local="inventory-ejb3"/>
+    </property>
+    <property name="itemNumberSupplier">
+      <ref local="itemNumberSupplier"/>
+    </property>
+  </bean>
+
+  <bean id="simpleDeadlock" class="middlewhere.client.SimpleDeadlock">
+    <property name="inventoryManager">
+      <ref local="inventory-ejb3"/>
+    </property>
+  </bean>
+
+</beans>

@@ -1,0 +1,26 @@
+<project name="MiddleWhere"> 
+  <bannerLeft> 
+    <name>MiddleWhere</name> 
+    <href>http://www.middlewhere.com/</href> 
+  </bannerLeft>
+  <skin> 
+    <groupId>org.apache.maven.skins</groupId> 
+    <artifactId>maven-default-skin</artifactId> 
+    <version>1.0</version> 
+  </skin> 
+  <publishDate format="dd MMM yyyy" /> 
+  <body> 
+    <links> 
+      <item name="Apache" href="http://www.apache.org/"/> 
+      <item name="Maven" href="http://maven.apache.org/"/> 
+      <item name="Continuum" href="http://maven.apache.org/continuum"/> 
+    </links> 
+    <head> 
+      <meta name="faq" content="proficio"/> 
+    </head> 
+    <menu name="About"> 
+      <item name="What is MiddleWhere?" href="/about.html"/> 
+    </menu> 
+    ${reports} 
+  </body> 
+</project> 

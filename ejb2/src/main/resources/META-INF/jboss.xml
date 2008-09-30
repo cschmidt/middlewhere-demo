@@ -1,0 +1,8 @@
+<jboss>
+  <container-configurations>
+    <container-configuration>
+      <container-name>Standard CMP 2.x EntityBean</container-name>
+      <commit-option>A</commit-option>
+    </container-configuration>
+  </container-configurations>
+</jboss>

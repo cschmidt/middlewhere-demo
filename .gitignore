@@ -1,0 +1,9 @@
+# Ignore all 'hidden' files.  We don't check Eclipse project files into the repo.
+.classpath
+.DS_Store
+.project
+.settings
+# Ignore local backup files.
+*~
+# Ignore all the Maven target directories.
+target
